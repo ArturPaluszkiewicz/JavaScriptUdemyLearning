@@ -31,9 +31,13 @@ for(let e of flashcardsData){
     container.appendChild(newDiv)
 }
 
-function wejscieMyszy(){
-    console.log("Wejscie Myszy")
+function wejscieMyszy(event){
+    console.log(`Wejscie Myszy + ${event.target.textContent}`)
 }
-function wyjscieMyszy(){
-    console.log("Wyjscie Myszy")
+function wyjscieMyszy(event){
+    const angielskaNazwa = przetlumacz(event.target.textContent)
+    console.log(`Wyjscie Myszy + ${angielskaNazwa}`)
+}
+function przetlumacz(polskaNazwa){
+    return flashcardsData.find(f => f.polish === polskaNazwa).english
 }
