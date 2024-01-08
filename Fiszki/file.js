@@ -33,9 +33,11 @@ for(let e of flashcardsData){
 
 function wejscieMyszy(event){
     event.target.textContent = przetliumaczNaAngielski(event.target.textContent)
+    event.target.classList.toggle("bg-white")
 }
 function wyjscieMyszy(event){
     event.target.textContent = przetliumaczNaPolski(event.target.textContent)
+    event.target.classList.toggle("bg-white")
 }
 function przetliumaczNaAngielski(polskaNazwa){
     return flashcardsData.find(f => f.polish === polskaNazwa).english
