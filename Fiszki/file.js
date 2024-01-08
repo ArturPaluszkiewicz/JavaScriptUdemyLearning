@@ -21,4 +21,11 @@ const flashcardsData = [
     { polish: "Muzyka", english: "Music" }
 ];
 
-document.getElementById("container").appendChild()
+const container = document.getElementById("container")
+for(let e of flashcardsData){
+    console.log(e.polish)
+    const newDiv = document.createElement("div")
+    newDiv.textContent = `${e.polish}`
+    newDiv.className = "flashcard bg-white"
+    container.appendChild(newDiv)
+}
