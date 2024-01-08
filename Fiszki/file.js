@@ -23,9 +23,17 @@ const flashcardsData = [
 
 const container = document.getElementById("container")
 for(let e of flashcardsData){
-    console.log(e.polish)
     const newDiv = document.createElement("div")
     newDiv.textContent = `${e.polish}`
     newDiv.className = "flashcard bg-white"
+    newDiv.addEventListener("mouseenter", wejscieMyszy)
+    newDiv.addEventListener("mouseout", wyjscieMyszy)
     container.appendChild(newDiv)
+}
+
+function wejscieMyszy(){
+    console.log("Wejscie Myszy")
+}
+function wyjscieMyszy(){
+    console.log("Wyjscie Myszy")
 }
