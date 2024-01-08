@@ -32,12 +32,14 @@ for(let e of flashcardsData){
 }
 
 function wejscieMyszy(event){
-    console.log(`Wejscie Myszy + ${event.target.textContent}`)
+    event.target.textContent = przetliumaczNaAngielski(event.target.textContent)
 }
 function wyjscieMyszy(event){
-    const angielskaNazwa = przetlumacz(event.target.textContent)
-    console.log(`Wyjscie Myszy + ${angielskaNazwa}`)
+    event.target.textContent = przetliumaczNaPolski(event.target.textContent)
 }
-function przetlumacz(polskaNazwa){
+function przetliumaczNaAngielski(polskaNazwa){
     return flashcardsData.find(f => f.polish === polskaNazwa).english
+}
+function przetliumaczNaPolski(angielskaNazwa){
+    return flashcardsData.find(f => f.english === angielskaNazwa).polish
 }
