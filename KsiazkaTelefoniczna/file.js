@@ -38,6 +38,12 @@ function wyswietlKsiazke(ksiazka){
     ksiazka.forEach(e => {
         let kontakt = document.createElement("p")
         kontakt.textContent = `Nazwa: ${e.nazwa} - Number: ${e.numer}`
+        kontakt.id = e.nazwa
+        let removeButton = document.createElement("button")
+        removeButton.addEventListener("click", usunZKsiazki)
+        removeButton.textContent = "Remove"
+        removeButton.className = "btn btn-secondary"
+        kontakt.appendChild(removeButton)
         lista.appendChild(kontakt)
     })
 }
@@ -48,4 +54,9 @@ function filtrujKsiazke(){
     wyswietlKsiazke(ksiazka.filter(e => {
         return (regex.test(e.nazwa) || regex.test(e.numer))
     }))
+}
+function usunZKsiazki(event){
+    let elementDoUsuniecia = event.target.parentNode.id
+    ksiazka.splice(ksiazka.findIndex(e => e.nazwa === elementDoUsuniecia), 1)
+    wyswietlKsiazke(ksiazka)
 }
