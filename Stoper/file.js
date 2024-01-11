@@ -1,6 +1,7 @@
 let sekundy = 15
 let minuty = 10
 let godziny = 11
+let isStarted = false
 
 
 function resetZegara(){
@@ -32,8 +33,17 @@ function dodajCzas(x){
     }
     ustawCzas()
 }
+function startStop(){
+    if(isStarted){
+        isStarted = false
+    }else{
+        isStarted = true
+    }
+}
 
-setTimeout(ustawCzas,3000)
-setInterval(()=>{
-    dodajCzas(1)
+setTimeout(ustawCzas,1500)
+const mojInterwal = setInterval(()=>{
+    if(isStarted){
+        dodajCzas(1)
+    }
 },1000)
