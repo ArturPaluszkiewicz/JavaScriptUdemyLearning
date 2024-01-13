@@ -1,78 +1,32 @@
-window.onload = async () => {
-    const apiBaseUrl = "https://users-api-jk.azurewebsites.net"
+window.onload = () => {
+    let iloscElementow = 10
+    let strona = 1
+    let wyszukiwanie = ""
 
-    await renderUser()
-    async function renderUser() {
-        const tableBody = document.querySelector("table tbody")
-        const respone = await fetch(`${apiBaseUrl}/api/Users`)
-        console.log(respone)
-        const data = await respone.json()
-        console.log('data', data)
-        const userRows = data.map(user => {
-            return `<tr>
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td>${user.address.street}</td>
-            <td>${user.address.city}</td>
-            <td>${user.address.zipCode}</td>
-            </tr>`
-        })
+    wyswietlTabele()
+
+    async function wyswietlTabele(){
+        const tabela = document.getElementById("tabelka")
+        tabela.innerHTML = ''
+        console.log(tabela)
+        let respone = await fetch(`https://users-api-jk.azurewebsites.net/api/users/paged?page=${strona}&pageSize=${iloscElementow}`)
+        let data = await respone.json()
+        console.log(data)
+        let nowyHTML = ``
+        for(let i of data.items){
+            console.log(i)
+            nowyHTML += `<tr><td>${i.id}</td><td>${i.name}</td><td>${i.email}</td><td>${i.address.street}</td><td>${i.address.city}</td><td>${i.address.zipCode}</td></tr>`
+        }
+        tabela.innerHTML = `${nowyHTML}`
+    } 
     
-        tableBody.innerHTML = userRows.join("")
+    function ustawIloscElementow(){
+        wyswietlTabele()
     }
-
-
-
-    document.getElementById("addUserForm").addEventListener("submit", async function (event) {
-        event.preventDefault()
-
-        const form = document.getElementById("addUserForm")
-
-        if(!form.checkValidity()) {
-            form.classList.add("was-validated")
-            return
-        }
-
-        const formData = new FormData(form)
-       
-        const serializedData = {};
-        for (let [key, value] of formData.entries()) {
-            // debugger
-            const keys = key.split('.');
-            const lastKey = keys.pop();
-            let obj = serializedData;
-            for (let k of keys) {
-                obj[k] = obj[k] || {};
-                obj = obj[k];
-            }
-            obj[lastKey] = value;
-        }
-        const json = JSON.stringify(serializedData);
-        console.log(json)
-
-        const createUserResponse = await fetch(`${apiBaseUrl}/api/Users`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: json
-        })
-
-        if(createUserResponse.ok) {
-            alert("User created")
-            const closeModalBtn = document.getElementById("closeModalBtn")
-            closeModalBtn.click()
-            await renderUser()
-
-        } else if (createUserResponse.status === 400) {
-            const responseBody = await createUserResponse.json()
-            const errorMessages = Object.values(responseBody.errors).flatMap(x => x).join("\n")
-            alert("Fix your validation erros: \n" + errorMessages)
-        }
-        else {
-            alert("Something went wrong")
-        }
-
-    })
+    function ustawStrone(){
+        wyswietlTabele()
+    }
+    function ustawWyszukiwanie(){
+        wyswietlTabele()
+    }
 }
