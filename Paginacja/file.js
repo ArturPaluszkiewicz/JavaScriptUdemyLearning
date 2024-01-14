@@ -51,13 +51,4 @@ window.onload = () => {
     wielkoscStrony.addEventListener("change", (event) => {
         ustawIloscElementow(wielkoscStrony.options[wielkoscStrony.options.selectedIndex].value)
     })
-    let stronicowanie = document.getElementById("pagination")
-    let wzorzec = /\bactive\b/
-    for(let e of stronicowanie.children){
-        if(wzorzec.test(e.innerHTML)){
-            console.log(e.children[0].textContent)
-        }
-    }
-    console.log(stronicowanie.children)
-    
 }
