@@ -8,7 +8,7 @@ window.onload = () => {
     async function wyswietlTabele(){
         const tabela = document.getElementById("tabelka")
         tabela.innerHTML = ''
-        let respone = await fetch(`https://users-api-jk.azurewebsites.net/api/users/paged?page=${strona}&pageSize=${iloscElementow}`)
+        let respone = await fetch(`https://users-api-jk.azurewebsites.net/api/users/paged?page=${strona}&pageSize=${iloscElementow}&filter=${wyszukiwanie}`)
         let data = await respone.json()
         let nowyHTML = ``
         for(let i of data.items){
@@ -44,11 +44,18 @@ window.onload = () => {
         strona = value
         wyswietlTabele()
     }
-    function ustawWyszukiwanie(){
+    function ustawWyszukiwanie(value){
+        wyszukiwanie = value
+        strona = 1
         wyswietlTabele()
     }
     let wielkoscStrony = document.getElementById("pageSizeSelect")
-    wielkoscStrony.addEventListener("change", (event) => {
+    wielkoscStrony.addEventListener("change", () => {
         ustawIloscElementow(wielkoscStrony.options[wielkoscStrony.options.selectedIndex].value)
+    })
+
+    let filterElement = document.getElementById("filterInput")
+    filterElement.addEventListener("input", () => {
+        ustawWyszukiwanie(filterElement.value)
     })
 }
